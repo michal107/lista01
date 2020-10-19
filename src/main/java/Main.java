@@ -6,57 +6,33 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Book> books = new ArrayList<>();
-        ArrayList<Painting> paintings = new ArrayList<>();
-        ArrayList<Movie> movies = new ArrayList<>();
-        String selecteditem = "";
+        ArrayList<Release> releases = new ArrayList<>();
 
         System.out.println();
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.println("Select what kind of items you want to store in JSON file\nType 1 for books\nType 2 for paintings\nType 3 for movies\n");
-            int choice = Integer.parseInt(scanner.nextLine());
-            if(choice!=1 && choice!=2 && choice!=3) throw new Exception("Incorrect input");
-            switch (choice) {
-                case 1:
-                    selecteditem = "book"; break;
-                case 2:
-                    selecteditem = "painting"; break;
-                case 3:
-                    selecteditem = "movie"; break;
-            }
-            System.out.println("Select how many "+ selecteditem +"s you want to store\n");
+            System.out.println("Select how many books you want to store\n");
             int number = Integer.parseInt(scanner.nextLine());
             if(number<=0) throw new Exception("Incorrect input");
             for (int i = 0; i < number; i++) {
-                System.out.println("Enter " + selecteditem +" title");
+                System.out.println("Enter book title");
                 String title = scanner.nextLine();
-                System.out.println("Enter "+ selecteditem + "author");
-                String author = scanner.nextLine();
-                switch (choice) {
-                    case 1:
-                        books.add(new Book(title, author)); break;
-                    case 2:
-                        paintings.add(new Painting(title, author)); break;
-                    case 3:
-                        movies.add(new Movie(title, author)); break;
+                System.out.println("Enter book's author first name");
+                String author_first_name = scanner.nextLine();
+                System.out.println("Enter book's author surname");
+                String author_name = scanner.nextLine();
+                System.out.println("Enter book's author year of birth [AD only]");
+                int author_year_of_birth = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter book's publisher");
+                String publisher = scanner.nextLine();
+                System.out.println("Enter book's year of print");
+                int year_of_print = Integer.parseInt(scanner.nextLine());
+                books.add(new Book(title, new Author(author_first_name,author_name,author_year_of_birth),new Release(publisher, year_of_print)));
                 }
-            }
             Gson gson = new Gson();
-            switch (choice) {
-                case 1:
-                    String booksjson = gson.toJson(books);
-                    System.out.println(booksjson);
-                    break;
-                case 2:
-                    String paintingsjson = gson.toJson(paintings);
-                    System.out.println(paintingsjson);
-                    break;
-                case 3:
-                    String moviesjson = gson.toJson(movies);
-                    System.out.println(moviesjson);
-                    break;
-            }
+            String booksjson = gson.toJson(books);
+            System.out.println(booksjson);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(0);
