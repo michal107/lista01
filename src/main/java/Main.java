@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Book> books = new ArrayList<>();
-        ArrayList<Release> releases = new ArrayList<>();
 
         System.out.println();
         Scanner scanner = new Scanner(System.in);
@@ -26,13 +25,15 @@ public class Main {
                 int author_year_of_birth = Integer.parseInt(scanner.nextLine());
                 System.out.println("Enter book's publisher");
                 String publisher = scanner.nextLine();
-                System.out.println("Enter book's year of print");
+                System.out.println("Enter book's year of print"); // komentarz
+
                 int year_of_print = Integer.parseInt(scanner.nextLine());
                 books.add(new Book(title, new Author(author_first_name,author_name,author_year_of_birth),new Release(publisher, year_of_print)));
                 }
             Gson gson = new Gson();
             String booksjson = gson.toJson(books);
             System.out.println(booksjson);
+            scanner.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(0);
